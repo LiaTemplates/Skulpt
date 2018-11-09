@@ -12,8 +12,8 @@ narrator: US English Female
 comment:  Try to write a short comment about
           your course, multiline is also okay.
 
-script:   js/skulpt.min.js
-          js/skulpt-stdlib.js
+script:   https://gitcdn.xyz/repo/liaScript/skulpt_template/master/js/skulpt.min.js
+          https://gitcdn.xyz/repo/liaScript/skulpt_template/master/js/skulpt-stdlib.js
 
 
 @eval
@@ -55,6 +55,7 @@ let myPromise = Sk.misceval.asyncToPromise(function() {
 -->
 
 # Skulpt Template
+
 
 
 ``` python

@@ -35,9 +35,46 @@ Sk.configure({output: function(e){ send.lia("output", e) },
               read: builtinRead,
               inputfun: input(send.handle)});
 
-if( document.getElementById("skulpt_canvas") ) {
-  Sk.canvas = "skulpt_canvas";
-  (Sk.TurtleGraphics || (Sk.TurtleGraphics = {})).target = 'skulpt_canvas';
+setTimeout( function(e) {
+let myPromise = Sk.misceval.asyncToPromise(function() {
+  return Sk.importMainWithBody("<stdin>", false, `@input`, true);
+   });
+   myPromise.then(function(mod) {
+       send.lia("eval", "LIA: stop");
+   },
+   function(err) {
+       send.lia("eval", err.toString(), [], false);
+       send.lia("eval", "LIA: stop");
+   });
+}, 150);
+
+"LIA: terminal";
+</script>
+@end
+
+
+@eval_turtle
+<script>
+function builtinRead(x) {
+    if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+            throw "File not found: '" + x + "'";
+    return Sk.builtinFiles["files"][x];
+}
+
+function input(handle) {
+    return function(prompt) {
+    return new Promise((resolve, reject) => {	send.handle("input", (e) => resolve(e)) });
+  }
+}
+
+
+Sk.configure({output: function(e){ send.lia("output", e) },
+              read: builtinRead,
+              inputfun: input(send.handle)});
+
+if( document.getElementById("@0") ) {
+  Sk.canvas = "@0";
+  (Sk.TurtleGraphics || (Sk.TurtleGraphics = {})).target = '@0';
 }
 
 setTimeout( function(e) {
@@ -56,7 +93,6 @@ let myPromise = Sk.misceval.asyncToPromise(function() {
 "LIA: terminal";
 </script>
 @end
-
 -->
 
 # Skulpt Template
@@ -111,7 +147,7 @@ pre.innerHTML = '''
 ```
 @eval
 
-<span id="edoutput"></span>
+<span id="edoutput" class="persistent"></span>
 
 
 ## Turtle
@@ -127,6 +163,6 @@ for c in ['red', 'green', 'yellow', 'blue']:
     t.left(90)
     print "color", c
 ```
-@eval
+@eval_turtle(skulpt_canvas)
 
-<div id="skulpt_canvas" style="border-style: solid; height: 400px; width: 400px"></div>
+<div id="skulpt_canvas" class="persistent" style="border-style: solid; height: 400px; width: 400px"></div>

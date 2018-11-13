@@ -147,7 +147,7 @@ pre.innerHTML = '''
 ```
 @eval
 
-<span id="edoutput" class="persistent"></span>
+<span id="edoutput"></span>
 
 
 ## Turtle
@@ -165,4 +165,4 @@ for c in ['red', 'green', 'yellow', 'blue']:
 ```
 @eval_turtle(skulpt_canvas)
 
-<div id="skulpt_canvas" class="persistent" style="border-style: solid; height: 400px; width: 400px"></div>
+<div id="skulpt_canvas" style="border-style: solid; height: 400px; width: 400px"></div>

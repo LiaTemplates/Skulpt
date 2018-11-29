@@ -16,7 +16,7 @@ script:   https://gitcdn.xyz/repo/liaScript/skulpt_template/master/js/skulpt.min
           https://gitcdn.xyz/repo/liaScript/skulpt_template/master/js/skulpt-stdlib.js
 
 
-@eval
+@skulpt.eval
 <script>
 function builtinRead(x) {
     if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
@@ -53,7 +53,7 @@ let myPromise = Sk.misceval.asyncToPromise(function() {
 @end
 
 
-@eval_turtle
+@skulpt.eval_turtle
 <script>
 function builtinRead(x) {
     if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
@@ -119,7 +119,7 @@ hellos = input()
 for i in range(int(hellos)):
   print "Hello World #", i
 ```
-@eval
+@skulpt.eval
 
 ## Generator
 
@@ -132,7 +132,7 @@ def genr(n):
 
 print list(genr(12))
 ```
-@eval
+@skulpt.eval
 
 
 ## DOM
@@ -145,7 +145,7 @@ pre.innerHTML = '''
 <h1> Skulpt can also access DOM! </h1>
 '''
 ```
-@eval
+@skulpt.eval
 
 <span id="edoutput" class="persistent"></span>
 
@@ -163,6 +163,6 @@ for c in ['red', 'green', 'yellow', 'blue']:
     t.left(90)
     print "color", c
 ```
-@eval_turtle(skulpt_canvas)
+@skulpt.eval_turtle(skulpt_canvas)
 
 <div class="persistent" id="skulpt_canvas" style="border-style: solid; height: 400px; width: 400px"></div>

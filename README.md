@@ -1,76 +1,39 @@
 <!--
-author:   Your Name
+author:   André Dietrich
 
-email:    your@mail.org
+email:    andre.dietrich@ovgu.de
 
-version:  0.0.1
+version:  0.0.2
 
 language: en
 
 narrator: US English Female
 
-comment:  Try to write a short comment about
-          your course, multiline is also okay.
+comment:  Macros for Python programming in LiaScript, by making use of the
+          skulpt interpreter.
 
 script:   https://gitcdn.xyz/repo/liaScript/skulpt_template/master/js/skulpt.min.js
           https://gitcdn.xyz/repo/liaScript/skulpt_template/master/js/skulpt-stdlib.js
 
 
-@skulpt.eval
+@Skulpt.eval
 <script>
 function builtinRead(x) {
-    if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
-            throw "File not found: '" + x + "'";
-    return Sk.builtinFiles["files"][x];
+  if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+    throw "File not found: '" + x + "'";
+  return Sk.builtinFiles["files"][x];
 }
 
 function input(handle) {
-    return function(prompt) {
+  return function(prompt) {
     return new Promise((resolve, reject) => {	send.handle("input", (e) => resolve(e)) });
   }
 }
 
-
-Sk.configure({output: function(e){ send.lia("output", e) },
-              read: builtinRead,
-              inputfun: input(send.handle)});
-
-setTimeout( function(e) {
-let myPromise = Sk.misceval.asyncToPromise(function() {
-  return Sk.importMainWithBody("<stdin>", false, `@input`, true);
-   });
-   myPromise.then(function(mod) {
-       send.lia("eval", "LIA: stop");
-   },
-   function(err) {
-       send.lia("eval", err.toString(), [], false);
-       send.lia("eval", "LIA: stop");
-   });
-}, 150);
-
-"LIA: terminal";
-</script>
-@end
-
-
-@skulpt.eval_turtle
-<script>
-function builtinRead(x) {
-    if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
-            throw "File not found: '" + x + "'";
-    return Sk.builtinFiles["files"][x];
-}
-
-function input(handle) {
-    return function(prompt) {
-    return new Promise((resolve, reject) => {	send.handle("input", (e) => resolve(e)) });
-  }
-}
-
-
-Sk.configure({output: function(e){ send.lia("output", e) },
-              read: builtinRead,
-              inputfun: input(send.handle)});
+Sk.configure({
+  output: (e) => send.log(true, "", e.toString()),
+  read: builtinRead,
+  inputfun: input(send.handle)});
 
 if( document.getElementById("@0") ) {
   Sk.canvas = "@0";
@@ -78,15 +41,13 @@ if( document.getElementById("@0") ) {
 }
 
 setTimeout( function(e) {
-let myPromise = Sk.misceval.asyncToPromise(function() {
-  return Sk.importMainWithBody("<stdin>", false, `@input`, true);
-   });
-   myPromise.then(function(mod) {
-       send.lia("eval", "LIA: stop");
-   },
+  let myPromise = Sk.misceval.asyncToPromise(function() {
+    return Sk.importMainWithBody("<stdin>", false, `@input`, true);
+  });
+  myPromise.then(function(mod){ send.lia("LIA: stop") },
    function(err) {
-       send.lia("eval", err.toString(), [], false);
-       send.lia("eval", "LIA: stop");
+       console.error(err);
+       send.lia("LIA: stop");
    });
 }, 150);
 
@@ -97,19 +58,43 @@ let myPromise = Sk.misceval.asyncToPromise(function() {
 
 # Skulpt Template
 
-This is a template for developing interactive Python courses with LiaScript and
-Skulpt.
+This is a template for developing interactive Python courses with
+[LiaScript](https://LiaScript.github.io) and [Skulpt](http://www.skulpt.org).
 
-To find out more about Skulpt, visit the project site: http://www.skulpt.org
+__Try it on LiaScript:__
 
-See the live rendered version of this document at:
-https://raw.githubusercontent.com/liaScript/skulpt_template/master/README.md
+https://liascript.github.io/course/?https://raw.githubusercontent.com/liaScript/skulpt_template/master/README.md
 
-Clone or fork this Project and start to develop a course:
+__See the project on Github:__
 
-Github: https://github.com/liaScript/skulpt_template
+https://github.com/liaScript/skulpt_template
 
-## Example
+
+                         --{{1}}--
+There are three ways to use this template. The easiest way is to use the
+`import` statement and the url of the raw text-file of the master branch or any
+other branch or version. But you can also copy the required functionionality
+directly into the header of your Markdown document, see therefor the
+[last slide](#5). And of course, you could also clone this project and change
+it, as you wish.
+
+                           {{1}}
+1. Load the macros via
+
+   `import: https://raw.githubusercontent.com/liaScript/skulpt_template/master/README.md`
+
+2. Copy the definitions into your Project
+
+3. Clone this repository on GitHub
+
+
+## `@Skulpt.eval`
+
+                         --{{0}}--
+Add the macro `@Skulpt.eval` to the end of every Python code-block that you want
+to make executable and editable in LiaScript. The given code gets evaluate by
+the Skulpt interpreter and the result is shown in a console below.
+
 
 ``` python
 print "how many hellos should I print"
@@ -119,23 +104,15 @@ hellos = input()
 for i in range(int(hellos)):
   print "Hello World #", i
 ```
-@skulpt.eval
-
-## Generator
-
-```python
-def genr(n):
-    i = 0
-    while i < n:
-        yield i
-        i += 1
-
-print list(genr(12))
-```
-@skulpt.eval
+@Skulpt.eval
 
 
-## DOM
+## `@Skulpt.eval` with HTML
+
+                         --{{0}}--
+Adding an additional html-tag with an id-attribute you can also manipulate the
+DOM. If you add the class `persistent` to your tag, LiaScript will take care of
+your changes and restore them, if you load reload the section.
 
 ``` python
 import document
@@ -145,12 +122,20 @@ pre.innerHTML = '''
 <h1> Skulpt can also access DOM! </h1>
 '''
 ```
-@skulpt.eval
+@Skulpt.eval
 
-<span id="edoutput" class="persistent"></span>
+<span id="edoutput" class="persistent">
+  This is a span with id (edoutput) and class(persistent).
+</span>
 
 
-## Turtle
+## `@Skulpt.eval` with Turtle
+
+                          --{{0}}--
+You can use the Turtle implementation by adding another html-tag and by passing
+its id as a parameter to `@Skulpt.eval`. This element is then used as a canvas
+for the turtle and if you also add class persistent to it, then you can preserve
+its state.
 
 ```python
 import turtle
@@ -163,6 +148,68 @@ for c in ['red', 'green', 'yellow', 'blue']:
     t.left(90)
     print "color", c
 ```
-@skulpt.eval_turtle(skulpt_canvas)
+@Skulpt.eval(skulpt_canvas)
 
-<div class="persistent" id="skulpt_canvas" style="border-style: solid; height: 400px; width: 400px"></div>
+<div class="persistent" id="skulpt_canvas" style="border-style: solid; height: 400px; width: 400px">
+  This is a div with id (skulpt_canvas) and class (persistent).
+</div>
+
+## Implementation
+
+                         --{{0}}--
+The code shows how the macro `@Skulpt.eval` is implemented. The script command
+at the top loads two javascript libraries that have to be called in order load
+the interpreter.
+
+``` html
+script: https://gitcdn.xyz/repo/liaScript/skulpt_template/master/js/skulpt.min.js
+        https://gitcdn.xyz/repo/liaScript/skulpt_template/master/js/skulpt-stdlib.js
+
+@Skulpt.eval
+<script>
+function builtinRead(x) {
+  if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+    throw "File not found: '" + x + "'";
+  return Sk.builtinFiles["files"][x];
+}
+
+function input(handle) {
+  return function(prompt) {
+    return new Promise((resolve, reject) => {	send.handle("input", (e) => resolve(e)) });
+  }
+}
+
+Sk.configure({
+  output: (e) => send.log(true, "", e.toString()),
+  read: builtinRead,
+  inputfun: input(send.handle)});
+
+if( document.getElementById("@0") ) {
+  Sk.canvas = "@0";
+  (Sk.TurtleGraphics || (Sk.TurtleGraphics = {})).target = '@0';
+}
+
+setTimeout( function(e) {
+  let myPromise = Sk.misceval.asyncToPromise(function() {
+    return Sk.importMainWithBody("<stdin>", false, `@input`, true);
+  });
+  myPromise.then(function(mod){ send.lia("LIA: stop") },
+   function(err) {
+       console.error(err);
+       send.lia("LIA: stop");
+   });
+}, 150);
+
+"LIA: terminal";
+</script>
+@end
+```
+
+
+                         --{{1}}--
+If you want to minimize loading effort in your LiaScript project, you can also
+copy this code and paste it into your main comment header, see the code in the
+raw file of this document.
+
+                           {{1}}
+https://raw.githubusercontent.com/liaScript/skulpt_template/master/README.md

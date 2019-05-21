@@ -12,8 +12,8 @@ narrator: US English Female
 comment:  Macros for Python programming in LiaScript, by making use of the
           skulpt interpreter.
 
-script:   https://gitcdn.xyz/repo/liaScript/skulpt_template/master/js/skulpt.min.js
-          https://gitcdn.xyz/repo/liaScript/skulpt_template/master/js/skulpt-stdlib.js
+script:   https://gitcdn.xyz/repo/liaTemplates/skulpt/master/js/skulpt.min.js
+          https://gitcdn.xyz/repo/liaTemplates/skulpt/master/js/skulpt-stdlib.js
 
 
 @Skulpt.eval
@@ -56,18 +56,18 @@ setTimeout( function(e) {
 @end
 -->
 
-# Skulpt Template
+# Skulpt - Template
 
 This is a template for developing interactive Python courses with
 [LiaScript](https://LiaScript.github.io) and [Skulpt](http://www.skulpt.org).
 
 __Try it on LiaScript:__
 
-https://liascript.github.io/course/?https://raw.githubusercontent.com/liaScript/skulpt_template/master/README.md
+https://liascript.github.io/course/?https://raw.githubusercontent.com/liaTemplates/skulpt/master/README.md
 
 __See the project on Github:__
 
-https://github.com/liaScript/skulpt_template
+https://github.com/liaTemplates/skulpt
 
 
                          --{{1}}--
@@ -81,7 +81,7 @@ it, as you wish.
                            {{1}}
 1. Load the macros via
 
-   `import: https://raw.githubusercontent.com/liaScript/skulpt_template/master/README.md`
+   `import: https://raw.githubusercontent.com/liaTemplates/skulpt/master/README.md`
 
 2. Copy the definitions into your Project
 
@@ -162,8 +162,8 @@ at the top loads two javascript libraries that have to be called in order load
 the interpreter.
 
 ``` html
-script: https://gitcdn.xyz/repo/liaScript/skulpt_template/master/js/skulpt.min.js
-        https://gitcdn.xyz/repo/liaScript/skulpt_template/master/js/skulpt-stdlib.js
+script: https://gitcdn.xyz/repo/liaTemplates/skulpt/master/js/skulpt.min.js
+        https://gitcdn.xyz/repo/liaTemplates/skulpt/master/js/skulpt-stdlib.js
 
 @Skulpt.eval
 <script>
@@ -212,4 +212,4 @@ copy this code and paste it into your main comment header, see the code in the
 raw file of this document.
 
                            {{1}}
-https://raw.githubusercontent.com/liaScript/skulpt_template/master/README.md
+https://raw.githubusercontent.com/liaTemplates/skulpt/master/README.md

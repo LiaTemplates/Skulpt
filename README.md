@@ -3,11 +3,13 @@ author:   André Dietrich
 
 email:    andre.dietrich@ovgu.de
 
-version:  0.0.2
+version:  0.0.3
 
 language: en
 
 narrator: US English Female
+
+logo:     https://upload.wikimedia.org/wikipedia/commons/4/4a/Python3-powered_hello-world.svg
 
 comment:  Macros for Python programming in LiaScript, by making use of the
           skulpt interpreter.

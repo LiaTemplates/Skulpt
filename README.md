@@ -3,7 +3,7 @@ author:   André Dietrich
 
 email:    andre.dietrich@ovgu.de
 
-version:  0.0.3
+version:  0.0.4
 
 language: en
 
@@ -33,7 +33,7 @@ function input(handle) {
 }
 
 Sk.configure({
-  output: (e) => send.log(true, "", e.toString()),
+  output: (e) => send.lia(e.toString()),
   read: builtinRead,
   inputfun: input(send.handle)});
 
